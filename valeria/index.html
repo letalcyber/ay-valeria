@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>¿Quieres Salir Conmigo?</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #000000 0%, #190130 100%);
+        font-family: "Arial", sans-serif;
+      }
+
+      .container {
+        text-align: center;
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        position: relative;
+        z-index: 1001;
+      }
+
+      .image-container {
+        margin-bottom: 30px;
+      }
+
+      .image-container video {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .buttons-container {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 30px;
+      }
+
+      button {
+        padding: 12px 30px;
+        font-size: 18px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+
+      #btnNo {
+        background-color: #ff6b6b;
+        color: white;
+        padding: 12px 30px;
+      }
+
+      #btnNo:hover:not(:disabled) {
+        background-color: #ff5252;
+        transform: scale(1.05);
+      }
+
+      #btnNo:disabled {
+        background-color: #ff6b6b;
+        cursor: pointer;
+        opacity: 1;
+      }
+
+      #btnSi {
+        background-color: #51cf66;
+        color: white;
+        padding: 12px 30px;
+        font-size: 18px;
+      }
+
+      #btnSi:hover {
+        background-color: #40c057;
+      }
+
+      #btnSi.growing {
+        position: fixed;
+        z-index: 1000;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .message {
+        margin-top: 30px;
+        font-size: 24px;
+        color: #ff0814;
+        font-weight: bold;
+        display: none;
+        animation: fadeIn 0.5s ease;
+        position: relative;
+        z-index: 2000;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .message.show {
+        display: block;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 28px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>erick es bonito?</h1>
+
+      <div class="image-container">
+        <video controls width="300" height="300">
+          <source
+            src="valeria.mp4"
+            type="video/mp4"
+          />
+          Tu navegador no soporta videos.
+        </video>
+      </div>
+
+      <div class="buttons-container">
+        <button id="btnSi">Sí</button>
+        <button id="btnNo">No</button>
+      </div>
+    </div>
+
+    <div class="message" id="message">
+     ya sabia hey je
+    </div>
+
+    <div class="message" id="knowMessage"></div>
+
+    <script>
+      const btnNo = document.getElementById("btnNo");
+      const btnSi = document.getElementById("btnSi");
+      const message = document.getElementById("message");
+      const knowMessage = document.getElementById("knowMessage");
+      const container = document.querySelector(".container");
+      let siSize = 18;
+      let siWidth = 100;
+      let siHeight = 50;
+      let clickCount = 0;
+
+      btnNo.addEventListener("click", function () {
+        // Aumentar tamaño del botón Sí
+        clickCount++;
+        siSize += 8;
+        siWidth += 80;
+        siHeight += 40;
+
+        btnSi.style.fontSize = siSize + "px";
+        btnSi.style.width = siWidth + "px";
+        btnSi.style.height = siHeight + "px";
+        btnSi.style.padding = "0";
+        btnSi.style.display = "flex";
+        btnSi.style.alignItems = "center";
+        btnSi.style.justifyContent = "center";
+
+        // Agregar clase cuando comienza a crecer
+        if (clickCount === 1) {
+          btnSi.classList.add("growing");
+        }
+
+        // Hacer que el botón tape la pantalla gradualmente
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+
+        if (siWidth >= screenWidth * 0.8 || siHeight >= screenHeight * 0.8) {
+          // Cuando el botón es lo suficientemente grande, ocultamos el contenedor
+          container.style.display = "none";
+        }
+      });
+
+      btnSi.addEventListener("click", function () {
+        // Mostrar mensaje de felicidad
+        message.classList.add("show");
+        knowMessage.classList.add("show");
+        container.style.display = "none";
+        btnSi.style.display = "none";
+      });
+    </script>
+  </body>
+</html>
